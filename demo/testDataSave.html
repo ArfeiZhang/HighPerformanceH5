@@ -1,0 +1,108 @@
+<html style="font-size: 24px;">
+
+<head>
+  <script type="text/javascript">
+  var pageStartTime = new Date();
+  </script>
+  <title>本地测试</title>
+  <link rel="stylesheet" type="text/css" href="demo.css">
+</head>
+
+<body>
+  <div>测试数据存放位置对页面性能的影响。<br />
+    结论:把数据分别存储于常量（const）、本地变量(var)、块级作用域（let）、数组元素、对象成员中，分别访问10000次，比较访问时间。
+  </div>
+  <h3>常量访问时长：<span id="result1"></span>ms</h3>
+  <h3>本地变量访问时长：<span id="result2"></span>ms</h3>
+  <h3>数组元素访问时长：<span id="result3"></span>ms</h3>
+  <h3>对象成员访问时长：<span id="result4"></span>ms</h3>
+  <h3>深层次数组元素访问时长：<span id="result5"></span>ms</h3>
+  <h3>深层次对象成员访问时长：<span id="result6"></span>ms</h3>
+  <script type="text/javascript" src="static/js/showResult.js"></script>
+  <script type="text/javascript">
+  const a = "我是一个字符串";
+  var b = "我是一个字符串";
+  var c = ["我是一个字符串"];
+  var d = { str: "我是一个字符串" };
+  var e = [
+    [],
+    [],
+    [],
+    [
+      [],
+      [],
+      ["我是一个字符串"]
+    ]
+  ];
+  var f = {
+    f1: {},
+    f2: {},
+    f3: {},
+    g: {
+      g1: {},
+      g2: {},
+      h: {
+        str: "我是一个字符串"
+      }
+    }
+  };
+
+  var i, startTime, endTime, temp;
+  var count = 10000000;
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = a;
+  }
+  endTime = new Date();
+  showDuration("#result1", startTime, endTime);
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = b;
+  }
+  endTime = new Date();
+  showDuration("#result2", startTime, endTime);
+
+
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = c[0];
+  }
+  endTime = new Date();
+  showDuration("#result3", startTime, endTime);
+
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = d.str;
+  }
+  endTime = new Date();
+  showDuration("#result4", startTime, endTime);
+
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = e[3][2];
+  }
+  endTime = new Date();
+  showDuration("#result5", startTime, endTime);
+
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    temp = f.g.h.str;
+  }
+  endTime = new Date();
+  showDuration("#result6", startTime, endTime);
+
+  </script>
+</body>
+
+</html>

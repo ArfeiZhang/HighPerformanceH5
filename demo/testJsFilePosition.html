@@ -1,0 +1,42 @@
+<html style="font-size: 24px;">
+
+<head>
+   <script type="text/javascript">
+      var pageStartTime=new Date();
+   </script>
+   <title>本地测试</title>
+   <link rel="stylesheet" type="text/css" href="demo.css">
+   
+</head>
+
+<body>
+   <div>测试JS放置位置对页面呈现速度的影响。<br/>
+   结论:本DEMO在作者电脑中，模拟慢网和手机cpu（6x slowdown）。
+   JS文件放head里，一般需要7400ms左右，但是把JS文件放body结束位置前，时间可以减少到5400ms左右，优化了2秒。
+</div>
+     <h3>页面加载完成时长：<span id="showPageLoadDuration"></span>ms</h3>
+    <script type="text/javascript">
+         window.addEventListener('load', function() {
+        domContentLoadedTime = new Date().getTime();
+
+        document.querySelector("#showPageLoadDuration").innerText = (domContentLoadedTime - pageStartTime);
+
+
+
+    }, false);
+    </script>
+
+<script type="text/javascript" src="static/js/batch/1.js"></script>
+   <script type="text/javascript" src="static/js/batch/2.js"></script>
+   <script type="text/javascript" src="static/js/batch/3.js"></script>
+   <script type="text/javascript" src="static/js/batch/4.js"></script>
+   <script type="text/javascript" src="static/js/batch/5.js"></script>
+   <script type="text/javascript" src="static/js/batch/6.js"></script>
+   <script type="text/javascript" src="static/js/batch/7.js"></script>
+   <script type="text/javascript" src="static/js/batch/8.js"></script>
+   <script type="text/javascript" src="static/js/batch/9.js"></script>
+   <script type="text/javascript" src="static/js/batch/10.js"></script>
+  
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "browser-sync": ""
+  },
+  "dependencies": {
+    "monaco-editor": "^0.20.0"
+  }
+}

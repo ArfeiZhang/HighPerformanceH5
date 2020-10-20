@@ -1,0 +1,126 @@
+<html style="font-size: 24px;">
+
+<head>
+  <script type="text/javascript">
+  var pageStartTime = new Date();
+  </script>
+  <title>本地测试</title>
+  <link rel="stylesheet" type="text/css" href="demo.css">
+</head>
+
+<body>
+  <div>(待通过开发者工具对比)测试创建DOM的方式对页面性能的影响。<br />
+    结论:通过字符串拼接、DOM API直接创建元素、DOM API节点克隆创建元素、DOM API DOM片段创建元素，分别创建10000个元素，比较创建时间。
+  </div>
+  <h3>字符串拼接时长：<span id="result1"></span>ms</h3>
+  <h3>DOM API直接创建时长：<span id="result2"></span>ms</h3>
+  <h3>DOM API节点克隆创建元素：<span id="result3"></span>ms</h3>
+  <h3>DOM API DOM片段创建元素：<span id="result4"></span>ms</h3>
+  <div id="domContainer"></div>
+  <script type="text/javascript" src="static/js/showResult.js"></script>
+  <script type="text/javascript">
+  
+  var i, startTime, endTime, temp;
+  var count = 10000;
+  var strArr=[];
+  var eleDomContainer=document.querySelector("#domContainer");
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    strArr.push("<div><ul><li>"+i+"</li></ul></div>");
+  }
+  eleDomContainer.innerHTML=strArr.join("");
+
+  endTime = new Date();
+  showDuration("#result1", startTime, endTime);
+
+  eleDomContainer.innerHTML=null;
+
+
+  startTime = new Date();
+  var eleDiv,eleUl,eleLi;
+  for (i = 0; i < count; i++) {
+   eleDiv=document.createElement("div");
+    eleUl=document.createElement("ul");
+     eleLi=document.createElement("li");
+     eleLi.appendChild(document.createTextNode(i));
+
+     eleUl.appendChild(eleLi);
+     eleDiv.appendChild(eleUl);
+     eleDomContainer.appendChild(eleDiv);
+  }
+  eleDomContainer.innerHTML=strArr.join("");
+
+  endTime = new Date();
+  showDuration("#result2", startTime, endTime);
+
+  eleDomContainer.innerHTML=null;
+
+  startTime = new Date();
+  var eleDiv,eleUl,eleLi;
+  for (i = 0; i < count; i++) {
+   eleDiv=document.createElement("div");
+    eleUl=document.createElement("ul");
+     eleLi=document.createElement("li");
+     eleLi.appendChild(document.createTextNode(i));
+
+     eleUl.appendChild(eleLi);
+     eleDiv.appendChild(eleUl);
+     eleDomContainer.appendChild(eleDiv);
+  }
+
+  endTime = new Date();
+  showDuration("#result2", startTime, endTime);
+
+
+
+  eleDomContainer.innerHTML=null;
+
+  startTime = new Date();
+  var eleDivOri,eleUlOri,eleLiOri;
+  var eleDiv,eleUl,eleLi;
+     eleDivOri=document.createElement("div");
+    eleUlOri=document.createElement("ul");
+     eleLiOri=document.createElement("li");
+
+    
+  for (i = 0; i < count; i++) {
+   eleDiv=eleDivOri.cloneNode(false);
+    eleUl=eleUlOri.cloneNode(false);
+     eleLi=eleLiOri.cloneNode(false);
+     eleLi.appendChild(document.createTextNode(i));
+
+     eleUl.appendChild(eleLi);
+     eleDiv.appendChild(eleUl);
+     eleDomContainer.appendChild(eleDiv);
+  }
+
+  endTime = new Date();
+  showDuration("#result3", startTime, endTime);
+
+eleDomContainer.innerHTML=null;
+
+  startTime = new Date();
+  var eleDiv,eleUl,eleLi;
+  var eleDomFrag=document.createDocumentFragment();
+  for (i = 0; i < count; i++) {
+   eleDiv=document.createElement("div");
+    eleUl=document.createElement("ul");
+     eleLi=document.createElement("li");
+     eleLi.appendChild(document.createTextNode(i));
+
+     eleUl.appendChild(eleLi);
+     eleDiv.appendChild(eleUl);
+     eleDomFrag.appendChild(eleDiv);
+  }
+  eleDomContainer.appendChild(eleDomFrag);
+
+  endTime = new Date();
+  showDuration("#result4", startTime, endTime);
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<html style="font-size: 24px;">
+
+<head>
+  <script type="text/javascript">
+  var pageStartTime = new Date();
+  </script>
+  <title>本地测试</title>
+  <link rel="stylesheet" type="text/css" href="demo.css">
+</head>
+
+<body>
+  <div>测试读取DOM的方式对页面性能的影响。<br />
+    结论:通过在DOM中添加若干个字符，来测试不同方式的操作时间。
+  </div>
+  <h3>遍历过程中直接操作DOM：<span id="result1"></span>ms</h3>
+  <h3>遍历过程中使用局部变量直接操作DOM：<span id="result2"></span>ms</h3>
+  <h3>遍历结束后一次操作DOM：<span id="result3"></span>ms</h3>
+  <div id="domContainer"></div>
+  <script type="text/javascript" src="static/js/showResult.js"></script>
+  <script type="text/javascript">
+  var i, startTime, endTime, temp;
+  var count = 10000;
+  var strArr = [];
+
+
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    document.querySelector("#domContainer").innerHTML += "H5";
+  }
+
+
+  endTime = new Date();
+  showDuration("#result1", startTime, endTime);
+
+  //TYPE 2
+  document.querySelector("#domContainer").innerHTML = null;
+  var eleContent = document.querySelector("#domContainer")
+  startTime = new Date();
+  for (i = 0; i < count; i++) {
+    eleContent.innerHTML += "H5";
+  }
+
+
+  endTime = new Date();
+  showDuration("#result2", startTime, endTime);
+
+  //TYPE 3
+  document.querySelector("#domContainer").innerHTML = null;
+
+  startTime = new Date();
+  var str = "";
+  for (i = 0; i < count; i++) {
+    str += "H5";
+  }
+  document.querySelector("#domContainer").innerHTML += str;
+
+  endTime = new Date();
+  showDuration("#result3", startTime, endTime);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<html style="font-size: 24px;">
+
+<head>
+  <script type="text/javascript">
+  var pageStartTime = new Date();
+  </script>
+  <title>本地测试</title>
+  <link rel="stylesheet" type="text/css" href="demo.css">
+</head>
+
+<body>
+  <div>测试拼接字符串的方式对页面性能的影响。<br />
+    结论:通过来拼接较多字符，来测试不同方式的操作时间。
+  </div>
+  <h3>+:<span id="result1"></span>ms</h3>
+  <h3>+=：<span id="result2"></span>ms</h3>
+  <h3>数组合并：<span id="result3"></span>ms</h3>
+   <h3>string API：<span id="result4"></span>ms</h3>
+  <div id="domContainer"></div>
+  <script type="text/javascript" src="static/js/showResult.js"></script>
+  <script type="text/javascript">
+  var i, startTime, endTime, temp;
+  var count = 1000000;
+  
+document.querySelector("#domContainer").innerHTML = null;
+  startTime = new Date();
+  var str = "";
+  for (i = 0; i < count; i++) {
+    str =str+ "H";
+  }
+  document.querySelector("#domContainer").innerHTML = str;
+
+  endTime = new Date();
+  showDuration("#result1", startTime, endTime);
+
+
+  document.querySelector("#domContainer").innerHTML = null;
+  startTime = new Date();
+  var str = "";
+  for (i = 0; i < count; i++) {
+    str += "H";
+  }
+  document.querySelector("#domContainer").innerHTML = str;
+
+  endTime = new Date();
+  showDuration("#result2", startTime, endTime);
+
+
+var strArr = [];
+  document.querySelector("#domContainer").innerHTML = null;
+  startTime = new Date();
+  var str = "";
+  for (i = 0; i < count; i++) {
+    strArr.push("H");
+  }
+  document.querySelector("#domContainer").innerHTML = strArr.join("");
+
+  endTime = new Date();
+  showDuration("#result3", startTime, endTime);
+
+
+
+
+  document.querySelector("#domContainer").innerHTML = null;
+  startTime = new Date();
+  var str = "";
+  for (i = 0; i < count; i++) {
+
+    str =str.concat("H");
+  }
+  document.querySelector("#domContainer").innerHTML = str;
+
+  endTime = new Date();
+  showDuration("#result4", startTime, endTime);
+
+
+  
+  </script>
+</body>
+
+</html>
